@@ -80,9 +80,9 @@ namespace Tinybit {
     }
     export enum enPos {
 
-        //% blockId="LeftState" block="LeftState"
+        //% blockId="LeftState" block="Left"
         LeftState = 0,
-        //% blockId="RightState" block="RightState"
+        //% blockId="RightState" block="Right"
         RightState = 1
     }
 
@@ -194,7 +194,7 @@ namespace Tinybit {
         return yahStrip;  
     }  
 
-    //% blockId=Tinybit_RGB_Car_Big block="RGB_Car_Big|value %value"
+    //% blockId=Tinybit_RGB_Car_Big block="Car flash light|value %value"
     //% weight=98
     //% blockGap=10
     //% name.fieldEditor="gridpicker" name.fieldOptions.columns=4
@@ -235,7 +235,7 @@ namespace Tinybit {
             }
         }
     }
-    //% blockId=Tinybit_RGB_Car_Big2 block="RGB_Car_Big2|value1 %value1|value2 %value2|value3 %value3"
+    //% blockId=Tinybit_RGB_Car_Big2 block="Car flash light |red %value1|green %value2|blue %value3"
     //% weight=97
     //% blockGap=10
     //% value1.min=0 value1.max=255 value2.min=0 value2.max=255 value3.min=0 value3.max=255
@@ -332,7 +332,7 @@ namespace Tinybit {
         
    
     
-    //% blockId=Tinybit_Line_Sensor block="Line_Sensor|direct %direct|value %value"
+    //% blockId=Tinybit_Line_Sensor block="Line Sensor|location %direct|color %value"
     //% weight=89
     //% blockGap=10
     //% color="#006400"
@@ -380,7 +380,7 @@ namespace Tinybit {
 
     }
         
-    //% blockId=Tinybit_Ultrasonic_Car block="ultrasonic return distance(cm)"
+/*     //% blockId=Tinybit_Ultrasonic_Car block="ultrasonic return distance(cm)"
     //% color="#006400"
     //% weight=87
     //% blockGap=10
@@ -402,9 +402,9 @@ namespace Tinybit {
 				list.sort();
 				let length = (list[1] + list[2] + list[3])/3;
 				return  Math.floor(length);
-    }
+    } */
         
-    //% blockId=Tinybit_Ultrasonic_CarV2 block="ultrasonic for V2 return distance(cm)"
+    //% blockId=Tinybit_Ultrasonic_CarV2 block="ultrasonic return distance(in)"
     //% color="#006400"
     //% weight=87
     //% blockGap=10
@@ -418,7 +418,7 @@ namespace Tinybit {
 		pins.digitalWritePin(DigitalPin.P16, 0);
 
 		let d = pins.pulseIn(DigitalPin.P15, PulseValue.High, 500 * 58);
-        return  Math.floor(d / 58);
+        return  Math.floor(d / 58 * 0.393701);
 
     }
 
