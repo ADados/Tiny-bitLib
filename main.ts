@@ -11,7 +11,7 @@ namespace Tinybit {
     const PWM_ADD = 0x01
     const MOTOR = 0x02
     const RGB = 0x01
-    
+
     let yahStrip: neopixel.Strip;
 
     export enum enColor {
@@ -92,12 +92,12 @@ namespace Tinybit {
         //% blockId="Black" block="Black Line"
         Black = 1
     }
-    
-    
+
+
     export enum CarState {
-        //% blockId="Car_Run" block="Run"
+        //% blockId="Car_Run" block="Forward"
         Car_Run = 1,
-        //% blockId="Car_Back" block="Back"
+        //% blockId="Car_Back" block="Backward"
         Car_Back = 2,
         //% blockId="Car_Left" block="Left"
         Car_Left = 3,
@@ -105,9 +105,9 @@ namespace Tinybit {
         Car_Right = 4,
         //% blockId="Car_Stop" block="Stop"
         Car_Stop = 5,
-        //% blockId="Car_SpinLeft" block="SpinLeft"
+        //% blockId="Car_SpinLeft" block="Spin Left"
         Car_SpinLeft = 6,
-        //% blockId="Car_SpinRight" block="SpinRight"
+        //% blockId="Car_SpinRight" block="Spin Right"
         Car_SpinRight = 7
     }
 
@@ -118,17 +118,17 @@ namespace Tinybit {
         buf[1] = red;
         buf[2] = green;
         buf[3] = blue;
-        
+
         pins.i2cWriteBuffer(PWM_ADD, buf);
     }
 
     function setPwmMotor(mode: number, speed1: number, speed2: number): void {
         if (mode < 0 || mode > 6)
             return;
-        
+
         let buf = pins.createBuffer(5);
         buf[0] = MOTOR;
-        switch (mode) { 
+        switch (mode) {
             case 0: buf[1] = 0; buf[2] = 0; buf[3] = 0; buf[4] = 0; break;              //stop
             case 1: buf[1] = speed1; buf[2] = 0; buf[3] = speed2; buf[4] = 0; break;    //run
             case 2: buf[1] = 0; buf[2] = speed1; buf[3] = 0; buf[4] = speed2; break;    //back
@@ -162,14 +162,14 @@ namespace Tinybit {
     }
 
     function Car_stop() {
-       
+
         setPwmMotor(0, 0, 0);
     }
 
     function Car_spinleft(speed1: number, speed2: number) {
 
         setPwmMotor(5, speed1, speed2);
-    } 
+    }
 
     function Car_spinright(speed1: number, speed2: number) {
 
@@ -179,7 +179,7 @@ namespace Tinybit {
     /**
      * *****************************************************************
      * @param index
-     */   
+     */
 
     //% blockId=Tinybit_RGB_Car_Program block="RGB_Car_Program"
     //% weight=99
@@ -187,12 +187,12 @@ namespace Tinybit {
     //% color="#006400"
     //% name.fieldEditor="gridpicker" name.fieldOptions.columns=4
     export function RGB_Car_Program(): neopixel.Strip {
-         
+
         if (!yahStrip) {
             yahStrip = neopixel.create(DigitalPin.P12, 2, NeoPixelMode.RGB);
         }
-        return yahStrip;  
-    }  
+        return yahStrip;
+    }
 
     //% blockId=Tinybit_RGB_Car_Big block="Car flash light|value %value"
     //% weight=98
@@ -245,7 +245,7 @@ namespace Tinybit {
         setPwmRGB(value1, value2, value3);
 
     }
-    //% blockId=Tinybit_Music_Car block="Music_Car|%index"
+    //% blockId=Tinybit_Music_Car block="Car music|%index"
     //% weight=95
     //% blockGap=10
     //% color="#006400"
@@ -274,10 +274,10 @@ namespace Tinybit {
             case enMusic.power_down: music.beginMelody(music.builtInMelody(Melodies.PowerDown), MelodyOptions.Once); break;
         }
     }
-    
-    
-    
-    //% blockId=Tinybit_CarCtrl block="CarCtrl|%index"
+
+
+
+    //% blockId=Tinybit_CarCtrl block="Car move|%index"
     //% weight=93
     //% blockGap=10
     //% color="#006400"
@@ -293,7 +293,7 @@ namespace Tinybit {
             case CarState.Car_SpinRight: Car_spinright(255, 255); break;
         }
     }
-    
+
     //% blockId=Tinybit_CarCtrlSpeed block="Set car speed |%index|speed %speed"
     //% weight=92
     //% blockGap=10
@@ -311,7 +311,7 @@ namespace Tinybit {
             case CarState.Car_SpinRight: Car_spinright(speed, speed); break;
         }
     }
-    
+
     //% blockId=Tinybit_CarCtrlSpeed2 block="Set wheel speed |%index|left %speed1|right %speed2"
     //% weight=91
     //% blockGap=10
@@ -328,10 +328,10 @@ namespace Tinybit {
             case CarState.Car_SpinLeft: Car_spinleft(speed1, speed2); break;
             case CarState.Car_SpinRight: Car_spinright(speed1, speed2); break;
         }
-    }    
-        
-   
-    
+    }
+
+
+
     //% blockId=Tinybit_Line_Sensor block="Line Sensor|location %direct|color %value"
     //% weight=89
     //% blockGap=10
@@ -344,18 +344,18 @@ namespace Tinybit {
         pins.setPull(DigitalPin.P14, PinPullMode.PullNone);
         switch (direct) {
             case enPos.LeftState: {
-                if (pins.digitalReadPin(DigitalPin.P13) == value) {              
-                    temp = true;                  
+                if (pins.digitalReadPin(DigitalPin.P13) == value) {
+                    temp = true;
                 }
-                else {                  
+                else {
                      temp = false;
                 }
                 break;
             }
 
             case enPos.RightState: {
-                if (pins.digitalReadPin(DigitalPin.P14) == value) {              
-                    temp = true;                  
+                if (pins.digitalReadPin(DigitalPin.P14) == value) {
+                    temp = true;
                 }
                 else {
                     temp = false;
@@ -373,13 +373,13 @@ namespace Tinybit {
     //% name.fieldEditor="gridpicker" name.fieldOptions.columns=12
     export function Voice_Sensor(): number {
 	    //pins.setPull(DigitalPin.P1, PinPullMode.PullUp);
-        let temp  = 0;		
-        temp = pins.analogReadPin(AnalogPin.P1);           
-            
+        let temp  = 0;
+        temp = pins.analogReadPin(AnalogPin.P1);
+
         return temp;
 
     }
-        
+
 /*     //% blockId=Tinybit_Ultrasonic_Car block="ultrasonic return distance(cm)"
     //% color="#006400"
     //% weight=87
@@ -403,7 +403,7 @@ namespace Tinybit {
 				let length = (list[1] + list[2] + list[3])/3;
 				return  Math.floor(length);
     } */
-        
+
     //% blockId=Tinybit_Ultrasonic_CarV2 block="ultrasonic return distance(in)"
     //% color="#006400"
     //% weight=87
